@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Menu — Chowman Arekere</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c1611;
+    --lacquer:#9c2b2f;
+    --lacquer-dark:#6f1c1f;
+    --ginger:#d4a73d;
+    --scallion:#4f6f52;
+    --paper:#f3ecdd;
+    --paper-dim:#e8ddc4;
+    --max:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans',sans-serif;
+    line-height:1.5;
+  }
+  h1,h2,.display{
+    font-family:'Big Shoulders Display',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    line-height:0.92;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px;}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;top:0;z-index:60;
+    background:rgba(243,236,221,0.95);
+    backdrop-filter:blur(6px);
+    border-bottom:2px solid var(--ink);
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 24px;max-width:var(--max);margin:0 auto;
+  }
+  .logo{
+    font-family:'Big Shoulders Display',sans-serif;
+    font-weight:900;font-size:24px;text-transform:uppercase;
+  }
+  .logo span{color:var(--lacquer);}
+  .back-link{font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;}
+  .back-link:hover{color:var(--lacquer);}
+  .nav-cta{
+    background:var(--lacquer);color:var(--paper);
+    padding:9px 18px;border-radius:2px;font-weight:600;font-size:14px;
+    border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);
+  }
+
+  /* ---------- HERO ---------- */
+  .menu-hero{padding:44px 0 24px;border-bottom:2px solid var(--ink);}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;color:var(--lacquer);
+    font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;
+    margin-bottom:8px;
+  }
+  .menu-hero h1{font-size:clamp(38px,7vw,72px);font-weight:900;}
+  .menu-hero p{max-width:56ch;color:#3a2f26;margin-top:12px;font-size:15px;}
+  .menu-note{
+    margin-top:18px;font-size:12.5px;color:#7a6d54;
+    border-left:3px solid var(--ginger);padding-left:12px;max-width:60ch;
+  }
+
+  /* ---------- CONTROLS ---------- */
+  .controls{
+    position:sticky;top:57px;z-index:55;
+    background:var(--paper);border-bottom:2px solid var(--ink);
+    padding:14px 0;
+  }
+  .controls-inner{display:flex;flex-direction:column;gap:12px;}
+  .search-row{display:flex;gap:10px;align-items:center;}
+  #searchInput{
+    flex:1;padding:11px 14px;border:2px solid var(--ink);background:#fff;
+    font-family:'IBM Plex Sans',sans-serif;font-size:14.5px;border-radius:2px;
+  }
+  #searchInput:focus{outline:2px solid var(--lacquer);outline-offset:1px;}
+  .veg-toggle{display:flex;border:2px solid var(--ink);border-radius:2px;overflow:hidden;flex-shrink:0;}
+  .veg-toggle button{
+    padding:10px 14px;background:#fff;border:none;font-size:13px;font-weight:600;
+    cursor:pointer;font-family:'IBM Plex Sans',sans-serif;white-space:nowrap;
+  }
+  .veg-toggle button + button{border-left:2px solid var(--ink);}
+  .veg-toggle button.active{background:var(--ink);color:var(--paper);}
+  .veg-toggle button[data-veg="veg"].active{background:var(--scallion);}
+  .veg-toggle button[data-veg="nonveg"].active{background:var(--lacquer);}
+
+  .tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin;}
+  .tabs::-webkit-scrollbar{height:5px;}
+  .tabs::-webkit-scrollbar-thumb{background:var(--ink);}
+  .tab-btn{
+    flex-shrink:0;padding:9px 16px;border:2px solid var(--ink);background:#fff;
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;
+    text-transform:uppercase;letter-spacing:0.03em;cursor:pointer;border-radius:2px;
+    white-space:nowrap;
+  }
+  .tab-btn.active{background:var(--ink);color:var(--paper);}
+  .tab-btn .count{opacity:0.6;font-weight:500;}
+
+  /* ---------- RESULTS ---------- */
+  .results{padding:32px 0 80px;}
+  .cat-heading{
+    font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:28px;
+    margin:36px 0 14px;padding-top:8px;border-top:2px solid var(--ink);
+  }
+  .cat-heading:first-child{margin-top:0;border-top:none;padding-top:0;}
+  .item-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ink);border:1px solid var(--ink);}
+  .item{
+    background:var(--paper);padding:14px 16px;display:flex;justify-content:space-between;
+    align-items:center;gap:10px;
+  }
+  .item-name{font-size:14px;font-weight:500;display:flex;align-items:center;gap:8px;}
+  .veg-dot{
+    width:11px;height:11px;border:1.5px solid var(--scallion);flex-shrink:0;
+    display:inline-flex;align-items:center;justify-content:center;border-radius:2px;
+  }
+  .veg-dot::after{content:"";width:5px;height:5px;border-radius:50%;background:var(--scallion);}
+  .veg-dot.nonveg{border-color:var(--lacquer);}
+  .veg-dot.nonveg::after{background:var(--lacquer);border-radius:0;clip-path:polygon(50% 0%, 0% 100%, 100% 100%);}
+  .item-price{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--lacquer-dark);white-space:nowrap;font-size:14px;}
+  @media (max-width:640px){.item-grid{grid-template-columns:1fr;}}
+
+  .empty-state{text-align:center;padding:60px 20px;color:#7a6d54;font-size:15px;}
+
+  .legend{display:flex;gap:20px;font-size:12.5px;color:#5c5142;margin-bottom:8px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+
+  footer{padding:26px 0;text-align:center;font-size:12.5px;color:#6b5f49;border-top:2px solid var(--ink);}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">Chow<span>man</span></div>
+    <a class="back-link" href="chowman-arekere.html">← Back to site</a>
+    <a class="nav-cta" href="tel:09330025662">Call</a>
+  </nav>
+</header>
+
+<section class="menu-hero">
+  <div class="wrap">
+    <div class="eyebrow">The Full Card</div>
+    <h1>Every dish,<br>every price.</h1>
+    <p>298 items across soups, starters, mains, rice, noodles and more — pulled from Chowman's current menu. Search or filter by category to find what you're after.</p>
+    <div class="menu-note">Prices and availability follow Chowman's chain-wide menu and can vary slightly by outlet or change without notice — call 093300 25662 to confirm before you order.</div>
+  </div>
+</section>
+
+<div class="controls">
+  <div class="wrap controls-inner">
+    <div class="search-row">
+      <input type="text" id="searchInput" placeholder="Search dishes… e.g. chilli chicken, tofu, ramen" aria-label="Search menu">
+      <div class="veg-toggle" role="group" aria-label="Filter by diet">
+        <button data-veg="all" class="active">All</button>
+        <button data-veg="veg">🟩 Veg</button>
+        <button data-veg="nonveg">🔺 Non-Veg</button>
+      </div>
+    </div>
+    <div class="tabs" id="tabs"></div>
+  </div>
+</div>
+
+<section class="results">
+  <div class="wrap">
+    <div class="legend">
+      <span><span class="veg-dot"></span> Veg</span>
+      <span><span class="veg-dot nonveg"></span> Non-veg</span>
+    </div>
+    <div id="resultsContainer"></div>
+    <div class="empty-state" id="emptyState" style="display:none;">No dishes match that search. Try another word, or call and ask — the printed menu sometimes runs ahead of this list.</div>
+  </div>
+</section>
+
+<footer>
+  Chowman (Arekere) · Independently built site · Menu &amp; prices sourced from Chowman's published listings — confirm on call before visiting.
+</footer>
+
+<script>
+const MENU = {"Soup":[{"name":"Veg Clear Soup","price":170,"veg":"veg"},{"name":"Lemon Coriander Thick Soup Veg","price":190,"veg":"veg"},{"name":"Hot And Sour Soup","price":200,"veg":"nonveg"},{"name":"Hot And Sour Soup Veg","price":190,"veg":"veg"},{"name":"Lemon Coriander Thick Soup","price":205,"veg":"nonveg"},{"name":"Lemon Pepper Soup Veg","price":190,"veg":"veg"},{"name":"Lemon Pepper Soup","price":200,"veg":"nonveg"},{"name":"Noodle Soup Veg","price":185,"veg":"veg"},{"name":"Lung Fung Soup","price":205,"veg":"nonveg"},{"name":"Manchow Soup Veg","price":190,"veg":"veg"},{"name":"Manchow Soup","price":200,"veg":"nonveg"},{"name":"Sweet Corn Soup Veg","price":185,"veg":"veg"},{"name":"Noodle Soup","price":195,"veg":"nonveg"},{"name":"Tom Yum Soup","price":245,"veg":"nonveg"},{"name":"Wonton Soup","price":235,"veg":"nonveg"},{"name":"Chicken Clear Soup","price":190,"veg":"nonveg"},{"name":"Sweet Corn Soup Chicken","price":205,"veg":"nonveg"},{"name":"Thai Soup","price":245,"veg":"nonveg"},{"name":"Crab Meat Soup With Wine","price":250,"veg":"nonveg"},{"name":"Chowman's Favourite Soup","price":270,"veg":"nonveg"},{"name":"Seafood Soup","price":270,"veg":"nonveg"}],"Starters":[{"name":"Roasted Chilli Lamb","price":375,"veg":"nonveg"},{"name":"Crispy Honey Paneer","price":240,"veg":"veg"},{"name":"Sliced Fish In Chilli Soya (Beckti) (10 Pcs)","price":550,"veg":"nonveg"},{"name":"Chowman's Signature Prawn Balls (8 Pcs)","price":350,"veg":"nonveg"},{"name":"Kolkata Style Chilli Chicken (Boneless) (Dry) (12 Pcs)","price":350,"veg":"nonveg"},{"name":"Pan Fried Chilli Mushroom","price":280,"veg":"veg"},{"name":"Smokey Chilli Chicken (12 Pcs)","price":360,"veg":"nonveg"},{"name":"Tibetan Momo (Chicken)","price":225,"veg":"nonveg"},{"name":"Chicken Momo (8 Pcs)","price":179,"veg":"nonveg"},{"name":"Kolkata Style Chilli Fish (Dry) (10 Pcs)","price":306,"veg":"nonveg"},{"name":"Smokey Chilli Fish (10 Pcs)","price":380,"veg":"nonveg"},{"name":"Kolkata Style Chilli Shrimp (26 Pcs)","price":430,"veg":"nonveg"},{"name":"Exotic Veg In Oyster Sauce","price":390,"veg":"veg"},{"name":"Kolkata Style Chilli Lamb","price":525,"veg":"nonveg"},{"name":"Lamb With Basil And Chilli","price":500,"veg":"nonveg"},{"name":"Steamed Chicken With Exotic Veg","price":340,"veg":"veg"},{"name":"Fish With Chinese Greens (10 Pcs) (Beckti)","price":560,"veg":"nonveg"},{"name":"Crispy Honey Fried Wontons (8 Pcs)","price":217,"veg":"nonveg"},{"name":"Fish Pepper Salt (10 Pcs)","price":289,"veg":"nonveg"},{"name":"Veg Fried Wonton (8 Pcs)","price":220,"veg":"veg"},{"name":"Fried Chilli Fish (10 Pcs)","price":289,"veg":"nonveg"},{"name":"Pepper Garlic Fish (10 Pcs)","price":289,"veg":"nonveg"},{"name":"Crispy Honey Fried Wonton Veg (8 Pcs)","price":235,"veg":"veg"},{"name":"Veg Spring Roll (6 Pcs)","price":250,"veg":"veg"},{"name":"Sui Mai (8 Pcs)","price":255,"veg":"nonveg"},{"name":"Crispy Chilli Baby Corn","price":275,"veg":"veg"},{"name":"Crispy Baby Corn With Honey","price":255,"veg":"veg"},{"name":"Chicken Spring Roll (6 Pcs)","price":260,"veg":"nonveg"},{"name":"Sauteed Assorted Vegetables","price":255,"veg":"veg"},{"name":"Chicken Fried Wonton (8 Pcs)","price":255,"veg":"nonveg"},{"name":"Pan Fried Chilli Paneer","price":275,"veg":"veg"},{"name":"Prawn Fried Wonton (8 Pcs)","price":270,"veg":"nonveg"},{"name":"Paneer Pepper Salt","price":270,"veg":"veg"},{"name":"Chicken Lollipop (8 Pcs)","price":325,"veg":"nonveg"},{"name":"Crispy Chilli Mushroom","price":265,"veg":"veg"},{"name":"Drums Of Heaven (Thai Style) (8 Pcs)","price":325,"veg":"nonveg"},{"name":"Fried Chicken Wings (4 Pcs)","price":300,"veg":"nonveg"},{"name":"Mushroom Pepper Salt","price":270,"veg":"veg"},{"name":"Sliced Chicken In Schezwan Style","price":305,"veg":"nonveg"},{"name":"American Corn Pepper Salt","price":280,"veg":"veg"},{"name":"Green And Red Pepper Chicken","price":310,"veg":"nonveg"},{"name":"Crispy Chilli American Corn","price":280,"veg":"veg"},{"name":"Exotic Mushrooms In Chilli Soya Sauce","price":290,"veg":"veg"},{"name":"Pepper Garlic Chicken (12 Pcs)","price":310,"veg":"nonveg"},{"name":"Konjee Three Treasure Mushroom","price":300,"veg":"veg"},{"name":"Barbeque Chicken (12 Pcs)","price":310,"veg":"nonveg"},{"name":"Honey Chilli Lotus Stem","price":300,"veg":"veg"},{"name":"Sweet And Spicy Chicken (12 Pcs)","price":320,"veg":"nonveg"},{"name":"Chicken Tai Pai","price":335,"veg":"nonveg"},{"name":"Kolkata Style Chilli Chicken (With Bone) (Dry) (12 Pcs)","price":330,"veg":"nonveg"},{"name":"Clay Pot Braised Chicken With Mushroom","price":340,"veg":"nonveg"},{"name":"Drums Of Heaven (Hong Kong Style) (8 Pcs)","price":325,"veg":"nonveg"},{"name":"Dragon Chicken","price":360,"veg":"nonveg"},{"name":"Honey Glazed Chicken With Lemon (12 Pcs)","price":330,"veg":"nonveg"},{"name":"Chilli Shrimps","price":350,"veg":"nonveg"},{"name":"Double Fried Lamb","price":375,"veg":"nonveg"},{"name":"Konjee Lamb","price":365,"veg":"nonveg"},{"name":"Honey Chilli Lamb","price":385,"veg":"nonveg"},{"name":"Fried Squid In Sweet Chilli Sauce","price":425,"veg":"nonveg"},{"name":"Chilli Squid","price":425,"veg":"nonveg"},{"name":"Golden Fried Prawn (8 Pcs)","price":425,"veg":"nonveg"},{"name":"Mountain Chilli Squid","price":430,"veg":"nonveg"},{"name":"Prawn Pepper Salt (8 Pcs)","price":425,"veg":"nonveg"},{"name":"Schezwan Pepper Squid","price":440,"veg":"nonveg"},{"name":"Pepper Garlic Prawn (8 Pcs)","price":435,"veg":"nonveg"},{"name":"Prawn In Chilli Mountain Sauce (8 Pcs)","price":425,"veg":"nonveg"},{"name":"Prawn Ka Seong (8 Pcs)","price":435,"veg":"nonveg"},{"name":"Bbq Smoked Fish (10 Pcs) (Beckti)","price":580,"veg":"nonveg"},{"name":"Teriyaki Chicken","price":340,"veg":"nonveg"},{"name":"Kung Pao Veg (Dry)","price":280,"veg":"veg"},{"name":"Chilli Fried Chicken (12 Pcs)","price":350,"veg":"nonveg"},{"name":"Fried Chilli Giant Tiger Prawn (3 Pcs)","price":775,"veg":"nonveg"},{"name":"Pepper Garlic Giant Tiger Prawn (3 Pcs)","price":775,"veg":"nonveg"},{"name":"Schezwan Style Giant Tiger Prawn (3 Pcs)","price":775,"veg":"nonveg"}],"Bao":[{"name":"Fish Bao (3 Pcs)","price":295,"veg":"nonveg"},{"name":"Chicken Bao (3 Pcs)","price":270,"veg":"nonveg"},{"name":"Veg Bao (3 Pcs)","price":240,"veg":"veg"}],"Main Course":[{"name":"Chilli Crab Whole","price":555,"veg":"nonveg"},{"name":"Chicken In Hot Garlic Sauce (12 Pcs)","price":325,"veg":"nonveg"},{"name":"Chilli Potato","price":245,"veg":"veg"},{"name":"Butter Garlic Fish (10 Pcs)","price":365,"veg":"nonveg"},{"name":"Clay Pot Fish (10 Pcs)","price":365,"veg":"nonveg"},{"name":"Thai Chilli Prawn (8 Pcs)","price":460,"veg":"nonveg"},{"name":"Clay Pot Prawn (8 Pcs)","price":465,"veg":"nonveg"},{"name":"Wok Fried Squid In Black Bean Sauce","price":430,"veg":"nonveg"},{"name":"Chilli Prawn (8 Pcs)","price":425,"veg":"nonveg"},{"name":"Chilli Plum Squid","price":440,"veg":"nonveg"},{"name":"Mountain Chilli Crab Whole","price":555,"veg":"nonveg"},{"name":"Devil's Lamb","price":395,"veg":"nonveg"},{"name":"Mixed Vegetables In White Sauce","price":255,"veg":"veg"},{"name":"Chilli Chicken (12 Pcs)","price":350,"veg":"nonveg"},{"name":"Chilli Basil Fish (10 Pcs)","price":345,"veg":"nonveg"},{"name":"Pepper Garlic Crab Whole","price":565,"veg":"nonveg"},{"name":"Devil's Chicken","price":340,"veg":"nonveg"},{"name":"Chilli Fish (10 Pcs)","price":285,"veg":"nonveg"},{"name":"Exotic Vegetables In Chilli Basil Sauce","price":245,"veg":"veg"},{"name":"Hot Garlic Lamb","price":395,"veg":"nonveg"},{"name":"Schezwan Mixed Vegetables With Baby Corn And Button Mushroom","price":260,"veg":"veg"},{"name":"Schezwan Crab Whole","price":555,"veg":"nonveg"},{"name":"Garlic Chicken (12 Pcs)","price":350,"veg":"nonveg"},{"name":"Ginger Prawn (8 Pcs)","price":425,"veg":"nonveg"},{"name":"Fish In Chilli Plum Sauce (10 Pcs)","price":345,"veg":"nonveg"},{"name":"Hunan Prawn (8 Pcs)","price":425,"veg":"nonveg"},{"name":"Crab Meat In Black Bean Sauce","price":465,"veg":"nonveg"},{"name":"Ginger Chicken (12 Pcs)","price":325,"veg":"nonveg"},{"name":"Sweet And Sour Vegetables","price":255,"veg":"veg"},{"name":"Chilli WineFish (10 Pcs)","price":355,"veg":"nonveg"},{"name":"Sliced Lamb In Chilli Garlic Sauce","price":395,"veg":"nonveg"},{"name":"Lemon Chicken (12 Pcs)","price":325,"veg":"nonveg"},{"name":"Manchurian Prawn (8 Pcs)","price":425,"veg":"nonveg"},{"name":"Chilli Garlic Baby Corn And Button Mushroom","price":270,"veg":"veg"},{"name":"Crab Meat In Chilli Basil","price":465,"veg":"nonveg"},{"name":"Lamb In Chilli Plum Sauce","price":405,"veg":"nonveg"},{"name":"Fish In Black Bean Sauce (10 Pcs)","price":345,"veg":"nonveg"},{"name":"Steamed Crab Meat In Ginger Wine Sauce","price":465,"veg":"nonveg"},{"name":"Manchurian Chicken (12 Pcs)","price":350,"veg":"nonveg"},{"name":"Garlic Paneer","price":255,"veg":"veg"},{"name":"Prawn In Chilli Lemon Sauce (8 Pcs)","price":425,"veg":"nonveg"},{"name":"Lamb In Hunan Sauce","price":405,"veg":"nonveg"},{"name":"Fish In Chilli Mustard Sauce (10 Pcs)","price":355,"veg":"nonveg"},{"name":"Lamb In Oyster Sauce","price":405,"veg":"nonveg"},{"name":"Chicken In Black Bean Sauce","price":340,"veg":"nonveg"},{"name":"Schezwan Prawn (8 Pcs)","price":425,"veg":"nonveg"},{"name":"Fish In Devil'S Sauce (10 Pcs)","price":355,"veg":"nonveg"},{"name":"Stir Fried Lamb With Diced Chilli And Cashewnuts","price":405,"veg":"nonveg"},{"name":"Exotic Veg In Pepper Garlic Sauce","price":260,"veg":"veg"},{"name":"Chicken In ChilliWine","price":340,"veg":"nonveg"},{"name":"Chilli Honey Prawn (8 Pcs)","price":435,"veg":"nonveg"},{"name":"Sweet And Sour Prawn (8 Pcs)","price":435,"veg":"nonveg"},{"name":"Chicken In Plum Sauce (12 Pcs)","price":345,"veg":"nonveg"},{"name":"American Corn And Potatoes In Hot Garlic Sauce","price":270,"veg":"veg"},{"name":"Fish In Oyster Sauce (10 Pcs)","price":380,"veg":"nonveg"},{"name":"Schezwan Orange Roasted Lamb","price":415,"veg":"nonveg"},{"name":"Exotic Veg In Coriander Sauce","price":270,"veg":"veg"},{"name":"Chilli Garlic Chicken In Red Bell Pepper (12 Pcs)","price":340,"veg":"nonveg"},{"name":"Fish In Sweet Chilli Sauce (10 Pcs)","price":350,"veg":"nonveg"},{"name":"Stir Fried Lamb Slices With Assorted Veg","price":415,"veg":"veg"},{"name":"Exotic Veg In Mountain Chilli Sauce","price":270,"veg":"veg"},{"name":"Honey Chicken (12 Pcs)","price":335,"veg":"nonveg"},{"name":"Fish Pak Choi (10 Pcs)","price":370,"veg":"nonveg"},{"name":"Butter Garlic Prawn (8 Pcs)","price":445,"veg":"nonveg"},{"name":"Hong Kong Chicken (12 Pcs)","price":335,"veg":"nonveg"},{"name":"Hunan Paneer","price":270,"veg":"veg"},{"name":"Garlic Fish (10 Pcs)","price":335,"veg":"nonveg"},{"name":"Paneer Manchurian","price":270,"veg":"veg"},{"name":"Chilli Basil Prawn (8 Pcs)","price":445,"veg":"nonveg"},{"name":"Hunan Chicken","price":340,"veg":"nonveg"},{"name":"Ginger Fish (10 Pcs)","price":335,"veg":"nonveg"},{"name":"Schezwan Chicken (12 Pcs)","price":340,"veg":"nonveg"},{"name":"Hong Kong Style Fish (10 Pcs)","price":355,"veg":"nonveg"},{"name":"Hot Garlic Fish (10 Pcs)","price":345,"veg":"nonveg"},{"name":"Devil'S Prawn (8 Pcs)","price":445,"veg":"nonveg"},{"name":"Tofu In Black Bean Sauce","price":280,"veg":"veg"},{"name":"Kung Pao Prawn (8 Pcs)","price":445,"veg":"nonveg"},{"name":"Hunan Fish (10 Pcs)","price":345,"veg":"nonveg"},{"name":"Sliced Chicken With Chilli Garlic Sauce","price":350,"veg":"nonveg"},{"name":"Sweet And Sour Chicken (12 Pcs)","price":345,"veg":"nonveg"},{"name":"Prawn In Black Bean Sauce (8 Pcs)","price":435,"veg":"nonveg"},{"name":"Tofu In Hot Garlic Sauce","price":280,"veg":"veg"},{"name":"Lemon Fish (10 Pcs)","price":345,"veg":"nonveg"},{"name":"General Tso's Chicken (12 Pcs)","price":340,"veg":"nonveg"},{"name":"Prawn In Mustard Chilli Sauce (8 Pcs)","price":445,"veg":"nonveg"},{"name":"Chilli Tofu","price":280,"veg":"veg"},{"name":"Lemon Honey Fish (10 Pcs)","price":355,"veg":"nonveg"},{"name":"Oyster Chicken With Vegetables (12 Pcs)","price":345,"veg":"veg"},{"name":"Prawn In Oyster Sauce (8 Pcs)","price":445,"veg":"nonveg"},{"name":"Devil's Choice Vegetables","price":280,"veg":"veg"},{"name":"Manchurian Fish (10 Pcs)","price":345,"veg":"nonveg"},{"name":"Sp
