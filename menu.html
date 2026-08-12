@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chowman Arekere — Menu</title>
+<style>
+:root{--ink:#1c1611;--red:#9c2b2f;--dark:#6f1c1f;--green:#4f6f52;--paper:#f3ecdd;--white:#fff;--gold:#d4a73d}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:Arial,sans-serif;line-height:1.45}
+header{position:sticky;top:0;z-index:10;background:rgba(243,236,221,.97);border-bottom:2px solid var(--ink)}
+nav{max-width:1120px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-size:25px;font-weight:900}.logo span{color:var(--red)}
+a{color:inherit;text-decoration:none}.back{font-weight:700}.call{background:var(--red);color:white;padding:9px 16px;border:2px solid var(--ink);font-weight:700}
+.wrap{max-width:1120px;margin:auto;padding:0 20px}
+.hero{padding:42px 0 25px;border-bottom:2px solid var(--ink)}
+.eyebrow{color:var(--red);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+h1{font-size:clamp(42px,8vw,76px);line-height:.9;margin-top:7px;text-transform:uppercase}
+.hero p{margin-top:14px;max-width:650px;color:#51463b}
+.controls{position:sticky;top:60px;z-index:9;background:var(--paper);border-bottom:2px solid var(--ink);padding:14px 0}
+.search{display:flex;gap:10px}
+input{width:100%;padding:12px 14px;border:2px solid var(--ink);font-size:15px;background:white}
+.filters{display:flex;gap:8px;overflow:auto;margin-top:10px;padding-bottom:3px}
+button{border:2px solid var(--ink);background:white;padding:9px 13px;font-weight:700;cursor:pointer;white-space:nowrap}
+button.active{background:var(--ink);color:var(--paper)}
+button.veg.active{background:var(--green)}button.nonveg.active{background:var(--red)}
+main{padding:30px 0 70px}
+.category{font-size:28px;text-transform:uppercase;margin:30px 0 12px;border-top:2px solid var(--ink);padding-top:9px}
+.category:first-child{margin-top:0;border-top:0}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--ink);border:1px solid var(--ink)}
+.item{background:var(--paper);padding:14px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.name{display:flex;gap:8px;align-items:center;font-size:14px;font-weight:600}
+.dot{width:11px;height:11px;border:2px solid var(--green);display:inline-block;position:relative;flex:none}
+.dot:after{content:"";width:5px;height:5px;background:var(--green);border-radius:50%;position:absolute;left:1px;top:1px}
+.dot.nv{border-color:var(--red)}.dot.nv:after{background:var(--red);border-radius:0;clip-path:polygon(50% 0,0 100%,100% 100%)}
+.price{font-family:monospace;color:var(--dark);font-weight:800;white-space:nowrap}
+.hidden{display:none!important}
+.empty{text-align:center;padding:60px 20px;color:#6b5f49}
+footer{text-align:center;border-top:2px solid var(--ink);padding:25px;color:#6b5f49;font-size:13px}
+@media(max-width:650px){.grid{grid-template-columns:1fr}.back{display:none}.item{padding:13px 11px}}
+</style>
+</head>
+<body>
+<header><nav>
+  <div class="logo">Chow<span>man</span></div>
+  <a class="back" href="index.html">← Back to site</a>
+  <a class="call" href="tel:09330025662">Call</a>
+</nav></header>
+
+<section class="hero"><div class="wrap">
+  <div class="eyebrow">The Full Card</div>
+  <h1>Every dish.<br>Every price.</h1>
+  <p>Browse the menu, search for a dish, or filter by category and dietary preference.</p>
+</div></section>
+
+<section class="controls"><div class="wrap">
+  <div class="search"><input id="search" type="search" placeholder="Search dishes…"></div>
+  <div class="filters" id="filters">
+    <button class="active" data-cat="all">All</button>
+    <button data-cat="Soup">Soup</button>
+    <button data-cat="Starters">Starters</button>
+    <button data-cat="Bao">Bao</button>
+    <button data-cat="Main Course">Main Course</button>
+    <button class="active" data-diet="all">All diets</button>
+    <button class="veg" data-diet="veg">Veg</button>
+    <button class="nonveg" data-diet="nonveg">Non-Veg</button>
+  </div>
+</div></section>
+
+<main><div class="wrap" id="menu"></div></main>
+<footer>Chowman Arekere · Prices and availability should be confirmed with the outlet before ordering.</footer>
+
+<script>
+const MENU={
+"Soup":[
+["Veg Clear Soup",170,"veg"],["Lemon Coriander Thick Soup Veg",190,"veg"],["Hot And Sour Soup",200,"nonveg"],
+["Hot And Sour Soup Veg",190,"veg"],["Lemon Coriander Thick Soup",205,"nonveg"],["Lemon Pepper Soup Veg",190,"veg"],
+["Lemon Pepper Soup",200,"nonveg"],["Noodle Soup Veg",185,"veg"],["Lung Fung Soup",205,"nonveg"],
+["Manchow Soup Veg",190,"veg"],["Manchow Soup",200,"nonveg"],["Sweet Corn Soup Veg",185,"veg"],
+["Noodle Soup",195,"nonveg"],["Tom Yum Soup",245,"nonveg"],["Wonton Soup",235,"nonveg"],
+["Chicken Clear Soup",190,"nonveg"],["Sweet Corn Soup Chicken",205,"nonveg"],["Thai Soup",245,"nonveg"],
+["Crab Meat Soup With Wine",250,"nonveg"],["Chowman's Favourite Soup",270,"nonveg"],["Seafood Soup",270,"nonveg"]
+],
+"Starters":[
+["Roasted Chilli Lamb",375,"nonveg"],["Crispy Honey Paneer",240,"veg"],["Sliced Fish In Chilli Soya (Beckti) (10 Pcs)",550,"nonveg"],
+["Chowman's Signature Prawn Balls (8 Pcs)",350,"nonveg"],["Kolkata Style Chilli Chicken (Boneless) (Dry) (12 Pcs)",350,"nonveg"],
+["Pan Fried Chilli Mushroom",280,"veg"],["Smokey Chilli Chicken (12 Pcs)",360,"nonveg"],["Tibetan Momo (Chicken)",225,"nonveg"],
+["Chicken Momo (8 Pcs)",179,"nonveg"],["Kolkata Style Chilli Fish (Dry) (10 Pcs)",306,"nonveg"],
+["Smokey Chilli Fish (10 Pcs)",380,"nonveg"],["Kolkata Style Chilli Shrimp (26 Pcs)",430,"nonveg"],
+["Exotic Veg In Oyster Sauce",390,"veg"],["Kolkata Style Chilli Lamb",525,"nonveg"],["Lamb With Basil And Chilli",500,"nonveg"],
+["Steamed Chicken With Exotic Veg",340,"nonveg"],["Fish With Chinese Greens (10 Pcs) (Beckti)",560,"nonveg"],
+["Crispy Honey Fried Wontons (8 Pcs)",217,"nonveg"],["Fish Pepper Salt (10 Pcs)",289,"nonveg"],["Veg Fried Wonton (8 Pcs)",220,"veg"],
+["Fried Chilli Fish (10 Pcs)",289,"nonveg"],["Pepper Garlic Fish (10 Pcs)",289,"nonveg"],["Crispy Honey Fried Wonton Veg (8 Pcs)",235,"veg"],
+["Veg Spring Roll (6 Pcs)",250,"veg"],["Sui Mai (8 Pcs)",255,"nonveg"],["Crispy Chilli Baby Corn",275,"veg"],
+["Crispy Baby Corn With Honey",255,"veg"],["Chicken Spring Roll (6 Pcs)",260,"nonveg"],["Sauteed Assorted Vegetables",255,"veg"],
+["Chicken Fried Wonton (8 Pcs)",255,"nonveg"],["Pan Fried Chilli Paneer",275,"veg"],["Prawn Fried Wonton (8 Pcs)",270,"nonveg"],
+["Paneer Pepper Salt",270,"veg"],["Chicken Lollipop (8 Pcs)",325,"nonveg"],["Crispy Chilli Mushroom",265,"veg"],
+["Drums Of Heaven (Thai Style) (8 Pcs)",325,"nonveg"],["Fried Chicken Wings (4 Pcs)",300,"nonveg"],
+["Mushroom Pepper Salt",270,"veg"],["Sliced Chicken In Schezwan Style",305,"nonveg"],
+["American Corn Pepper Salt",280,"veg"],["Green And Red Pepper Chicken",310,"nonveg"],
+["Crispy Chilli American Corn",280,"veg"],["Exotic Mushrooms In Chilli Soya Sauce",290,"veg"],
+["Pepper Garlic Chicken (12 Pcs)",310,"nonveg"],["Konjee Three Treasure Mushroom",300,"veg"],
+["Barbeque Chicken (12 Pcs)",310,"nonveg"],["Honey Chilli Lotus Stem",300,"veg"],
+["Sweet And Spicy Chicken (12 Pcs)",320,"nonveg"],["Chicken Tai Pai",335,"nonveg"],
+["Kolkata Style Chilli Chicken (With Bone) (Dry) (12 Pcs)",330,"nonveg"],["Clay Pot Braised Chicken With Mushroom",340,"nonveg"],
+["Drums Of Heaven (Hong Kong Style) (8 Pcs)",325,"nonveg"],["Dragon Chicken",360,"nonveg"],
+["Honey Glazed Chicken With Lemon (12 Pcs)",330,"nonveg"],["Chilli Shrimps",350,"nonveg"],
+["Double Fried Lamb",375,"nonveg"],["Konjee Lamb",365,"nonveg"],["Honey Chilli Lamb",385,"nonveg"],
+["Fried Squid In Sweet Chilli Sauce",425,"nonveg"],["Chilli Squid",425,"nonveg"],["Golden Fried Prawn (8 Pcs)",425,"nonveg"],
+["Mountain Chilli Squid",430,"nonveg"],["Prawn Pepper Salt (8 Pcs)",425,"nonveg"],["Schezwan Pepper Squid",440,"nonveg"],
+["Pepper Garlic Prawn (8 Pcs)",435,"nonveg"],["Prawn In Chilli Mountain Sauce (8 Pcs)",425,"nonveg"],
+["Prawn Ka Seong (8 Pcs)",435,"nonveg"],["Bbq Smoked Fish (10 Pcs) (Beckti)",580,"nonveg"],
+["Teriyaki Chicken",340,"nonveg"],["Kung Pao Veg (Dry)",280,"veg"],["Chilli Fried Chicken (12 Pcs)",350,"nonveg"],
+["Fried Chilli Giant Tiger Prawn (3 Pcs)",775,"nonveg"],["Pepper Garlic Giant Tiger Prawn (3 Pcs)",775,"nonveg"],
+["Schezwan Style Giant Tiger Prawn (3 Pcs)",775,"nonveg"]
+],
+"Bao":[["Fish Bao (3 Pcs)",295,"nonveg"],["Chicken Bao (3 Pcs)",270,"nonveg"],["Veg Bao (3 Pcs)",240,"veg"]],
+"Main Course":[
+["Chilli Crab Whole",555,"nonveg"],["Chicken In Hot Garlic Sauce (12 Pcs)",325,"nonveg"],["Chilli Potato",245,"veg"],
+["Butter Garlic Fish (10 Pcs)",365,"nonveg"],["Clay Pot Fish (10 Pcs)",365,"nonveg"],["Thai Chilli Prawn (8 Pcs)",460,"nonveg"],
+["Clay Pot Prawn (8 Pcs)",465,"nonveg"],["Wok Fried Squid In Black Bean Sauce",430,"nonveg"],["Chilli Prawn (8 Pcs)",425,"nonveg"],
+["Chilli Plum Squid",440,"nonveg"],["Mountain Chilli Crab Whole",555,"nonveg"],["Devil's Lamb",395,"nonveg"],
+["Mixed Vegetables In White Sauce",255,"veg"],["Chilli Chicken (12 Pcs)",350,"nonveg"],["Chilli Basil Fish (10 Pcs)",345,"nonveg"],
+["Pepper Garlic Crab Whole",565,"nonveg"],["Devil's Chicken",340,"nonveg"],["Chilli Fish (10 Pcs)",285,"nonveg"],
+["Exotic Vegetables In Chilli Basil Sauce",245,"veg"],["Hot Garlic Lamb",395,"nonveg"],["Schezwan Mixed Vegetables With Baby Corn And Button Mushroom",260,"veg"],
+["Schezwan Crab Whole",555,"nonveg"],["Garlic Chicken (12 Pcs)",350,"nonveg"],["Ginger Prawn (8 Pcs)",425,"nonveg"],
+["Fish In Chilli Plum Sauce (10 Pcs)",345,"nonveg"],["Hunan Prawn (8 Pcs)",425,"nonveg"],["Crab Meat In Black Bean Sauce",465,"nonveg"],
+["Ginger Chicken (12 Pcs)",325,"nonveg"],["Sweet And Sour Vegetables",255,"veg"],["Chilli WineFish (10 Pcs)",355,"nonveg"],
+["Sliced Lamb In Chilli Garlic Sauce",395,"nonveg"],["Lemon Chicken (12 Pcs)",325,"nonveg"],["Manchurian Prawn (8 Pcs)",425,"nonveg"],
+["Chilli Garlic Baby Corn And Button Mushroom",270,"veg"],["Crab Meat In Chilli Basil",465,"nonveg"],["Lamb In Chilli Plum Sauce",405,"nonveg"],
+["Fish In Black Bean Sauce (10 Pcs)",345,"nonveg"],["Steamed Crab Meat In Ginger Wine Sauce",465,"nonveg"],
+["Manchurian Chicken (12 Pcs)",350,"nonveg"],["Garlic Paneer",255,"veg"],["Prawn In Chilli Lemon Sauce (8 Pcs)",425,"nonveg"],
+["Lamb In Hunan Sauce",405,"nonveg"],["Fish In Chilli Mustard Sauce (10 Pcs)",355,"nonveg"],["Lamb In Oyster Sauce",405,"nonveg"],
+["Chicken In Black Bean Sauce",340,"nonveg"],["Schezwan Prawn (8 Pcs)",425,"nonveg"],["Fish In Devil's Sauce (10 Pcs)",355,"nonveg"],
+["Exotic Veg In Pepper Garlic Sauce",260,"veg"],["Chicken In ChilliWine",340,"nonveg"],["Chilli Honey Prawn (8 Pcs)",435,"nonveg"],
+["Sweet And Sour Prawn (8 Pcs)",435,"nonveg"],["Chicken In Plum Sauce (12 Pcs)",345,"nonveg"],["American Corn And Potatoes In Hot Garlic Sauce",270,"veg"],
+["Fish In Oyster Sauce (10 Pcs)",380,"nonveg"],["Exotic Veg In Coriander Sauce",270,"veg"],
+["Chilli Garlic Chicken In Red Bell Pepper (12 Pcs)",340,"nonveg"],["Fish In Sweet Chilli Sauce (10 Pcs)",350,"nonveg"],
+["Exotic Veg In Mountain Chilli Sauce",270,"veg"],["Honey Chicken (12 Pcs)",335,"nonveg"],
+["Butter Garlic Prawn (8 Pcs)",445,"nonveg"],["Hong Kong Chicken (12 Pcs)",335,"nonveg"],["Hunan Paneer",270,"veg"],
+["Garlic Fish (10 Pcs)",335,"nonveg"],["Paneer Manchurian",270,"veg"],["Chilli Basil Prawn (8 Pcs)",445,"nonveg"],
+["Hunan Chicken",340,"nonveg"],["Ginger Fish (10 Pcs)",335,"nonveg"],["Schezwan Chicken (12 Pcs)",340,"nonveg"],
+["Hong Kong Style Fish (10 Pcs)",355,"nonveg"],["Hot Garlic Fish (10 Pcs)",345,"nonveg"],["Devil's Prawn (8 Pcs)",445,"nonveg"],
+["Tofu In Black Bean Sauce",280,"veg"],["Kung Pao Prawn (8 Pcs)",445,"nonveg"],["Hunan Fish (10 Pcs)",345,"nonveg"],
+["Sliced Chicken With Chilli Garlic Sauce",350,"nonveg"],["Sweet And Sour Chicken (12 Pcs)",345,"nonveg"],
+["Prawn In Black Bean Sauce (8 Pcs)",435,"nonveg"],["Tofu In Hot Garlic Sauce",280,"veg"],["Lemon Fish (10 Pcs)",345,"nonveg"],
+["General Tso's Chicken (12 Pcs)",340,"nonveg"],["Prawn In Mustard Chilli Sauce (8 Pcs)",445,"nonveg"],["Chilli Tofu",280,"veg"],
+["Lemon Honey Fish (10 Pcs)",355,"nonveg"],["Oyster Chicken With Vegetables (12 Pcs)",345,"nonveg"],
+["Prawn In Oyster Sauce (8 Pcs)",445,"nonveg"],["Devil's Choice Vegetables",280,"veg"],["Manchurian Fish (10 Pcs)",345,"nonveg"]
+]};
+
+const menu=document.getElementById("menu"), search=document.getElementById("search");
+let category="all", diet="all";
+
+function render(){
+  const q=search.value.trim().toLowerCase();
+  menu.innerHTML="";
+  let total=0;
+  for(const [cat,items] of Object.entries(MENU)){
+    if(category!=="all" && category!==cat) continue;
+    const filtered=items.filter(([name,,d])=>
+      (!q || name.toLowerCase().includes(q)) && (diet==="all" || d===diet)
+    );
+    if(!filtered.length) continue;
+    total+=filtered.length;
+    const section=document.createElement("section");
+    section.innerHTML=`<h2 class="category">${cat}</h2><div class="grid"></div>`;
+    const grid=section.querySelector(".grid");
+    filtered.forEach(([name,price,d])=>{
+      const item=document.createElement("div");
+      item.className="item";
+      item.innerHTML=`<div class="name"><span class="dot ${d==="nonveg"?"nv":""}"></span>${name}</div><div class="price">₹${price}</div>`;
+      grid.appendChild(item);
+    });
+    menu.appendChild(section);
+  }
+  if(!total) menu.innerHTML='<div class="empty">No dishes found. Try another search or filter.</div>';
+}
+document.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("[data-cat]").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active"); category=b.dataset.cat; render();
+});
+document.querySelectorAll("[data-diet]").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("[data-diet]").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active"); diet=b.dataset.diet; render();
+});
+search.addEventListener("input",render);
+render();
+</script>
+</body>
+</html>
